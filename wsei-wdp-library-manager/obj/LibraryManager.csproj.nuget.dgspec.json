@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\wsei-wdp-library-manager.csproj": {}
+    "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\LibraryManager.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\wsei-wdp-library-manager.csproj": {
+    "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\LibraryManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\wsei-wdp-library-manager.csproj",
-        "projectName": "wsei-wdp-library-manager",
-        "projectPath": "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\wsei-wdp-library-manager.csproj",
+        "projectUniqueName": "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\LibraryManager.csproj",
+        "projectName": "LibraryManager",
+        "projectPath": "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\LibraryManager.csproj",
         "packagesPath": "C:\\Users\\Krzysztof\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\wsei-wdp-library-manager\\obj\\",
         "projectStyle": "PackageReference",

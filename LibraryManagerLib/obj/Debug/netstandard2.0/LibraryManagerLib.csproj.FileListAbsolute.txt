@@ -1,0 +1,9 @@
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\obj\Debug\netstandard2.0\LibraryManagerLib.csprojAssemblyReference.cache
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\obj\Debug\netstandard2.0\LibraryManagerLib.AssemblyInfoInputs.cache
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\obj\Debug\netstandard2.0\LibraryManagerLib.AssemblyInfo.cs
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\obj\Debug\netstandard2.0\LibraryManagerLib.csproj.CoreCompileInputs.cache
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\bin\Debug\netstandard2.0\LibraryManagerLib.deps.json
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\bin\Debug\netstandard2.0\LibraryManagerLib.dll
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\bin\Debug\netstandard2.0\LibraryManagerLib.pdb
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\obj\Debug\netstandard2.0\LibraryManagerLib.dll
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\LibraryManagerLib\obj\Debug\netstandard2.0\LibraryManagerLib.pdb

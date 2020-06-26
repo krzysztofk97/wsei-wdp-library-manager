@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "wsei_wdp_library_manager/1.0.0": {
+        "dependencies": {
+          "LibraryManagerLib": "1.0.0"
+        },
+        "runtime": {
+          "wsei_wdp_library_manager.dll": {}
+        }
+      },
+      "LibraryManagerLib/1.0.0": {
+        "runtime": {
+          "LibraryManagerLib.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "wsei_wdp_library_manager/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LibraryManagerLib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

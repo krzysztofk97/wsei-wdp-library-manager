@@ -1,0 +1,16 @@
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\bin\Debug\netcoreapp3.1\wsei_wdp_library_manager.exe
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\bin\Debug\netcoreapp3.1\wsei_wdp_library_manager.deps.json
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\bin\Debug\netcoreapp3.1\wsei_wdp_library_manager.runtimeconfig.json
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\bin\Debug\netcoreapp3.1\wsei_wdp_library_manager.runtimeconfig.dev.json
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\bin\Debug\netcoreapp3.1\wsei_wdp_library_manager.dll
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\bin\Debug\netcoreapp3.1\wsei_wdp_library_manager.pdb
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\obj\Debug\netcoreapp3.1\wsei_wdp_library_manager.csprojAssemblyReference.cache
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\obj\Debug\netcoreapp3.1\wsei_wdp_library_manager.AssemblyInfoInputs.cache
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\obj\Debug\netcoreapp3.1\wsei_wdp_library_manager.AssemblyInfo.cs
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\obj\Debug\netcoreapp3.1\wsei_wdp_library_manager.csproj.CoreCompileInputs.cache
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\obj\Debug\netcoreapp3.1\wsei_wdp_library_manager.dll
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\obj\Debug\netcoreapp3.1\wsei_wdp_library_manager.pdb
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\obj\Debug\netcoreapp3.1\wsei_wdp_library_manager.genruntimeconfig.cache
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\bin\Debug\netcoreapp3.1\LibraryManagerLib.dll
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\bin\Debug\netcoreapp3.1\LibraryManagerLib.pdb
+C:\Users\Krzysztof\Documents\GitHub\wsei-wdp-library-manager\wsei-wdp-library-manager\obj\Debug\netcoreapp3.1\wsei_wdp_library_manager.csproj.CopyComplete
