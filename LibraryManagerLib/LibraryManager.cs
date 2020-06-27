@@ -15,9 +15,11 @@ namespace LibraryManagerLib
             books = new List<Book>();
         }
 
-        public void AddNewBook(string title, string author, string isbn)
+        public void AddNewBook(string title, string author, string isbn, string shelf, int quantity)
         {
-            Book b = new Book(title, author, isbn);
+            int id = books.Count + 1;
+
+            Book b = new Book(id, title, author, isbn, shelf, quantity);
             AddNewBook(b);             
         }
 
@@ -26,7 +28,7 @@ namespace LibraryManagerLib
             if (!IsISBNDuplicated(b.ISBN))
                 books.Add(b);
             else
-                throw new ArgumentException("Book with given ISBN already exists");
+                throw new ArgumentException("Książka z podanym numerem ISBN już istnieje");
         }
 
         private bool IsISBNDuplicated (string ISBN)
@@ -41,6 +43,11 @@ namespace LibraryManagerLib
         public List<Book> GetBooksList(int from, int length)
         {
             return books.GetRange(from, length);
+        }
+
+        public int GetBooksCount()
+        {
+            return books.Count;
         }
 
         public void AddNewReader(string name, string phoneNumber, string emailAddress)

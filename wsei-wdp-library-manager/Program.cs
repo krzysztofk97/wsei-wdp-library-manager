@@ -30,7 +30,7 @@ namespace wsei_wdp_library_manager
             catch(FormatException ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.WriteLine("Czytelnik nie został dodany. Wciśnij dowolny klawisz aby kontynuować...");
+                Console.WriteLine("Czytelnik nie został dodany, wciśnij dowolny klawisz aby kontynuować...");
                 Console.ReadKey();
             }
         }
@@ -53,7 +53,7 @@ namespace wsei_wdp_library_manager
                 Console.Clear();
                 Console.WriteLine($"Wyświetl czytelników | Łącznie czytelników: {library.GetReadersCount()}");
                 Console.WriteLine();
-                Console.WriteLine("ID | Imię i nazwisko | Telefon | Adres Email");
+                Console.WriteLine("ID | Imię i nazwisko | Telefon | Adres email");
 
                 foreach (Reader item in library.GetReadersList(currentFrom, resultsNumber))
                 {
@@ -73,6 +73,108 @@ namespace wsei_wdp_library_manager
                 {
                     case 1:
                         if (currentFrom + resultsPerScreen < library.GetReadersCount())
+                            currentFrom += resultsPerScreen;
+                        break;
+
+                    case 2:
+                        if (currentFrom > 0)
+                            currentFrom -= resultsPerScreen;
+
+                        if (resultsNumber < resultsPerScreen)
+                            resultsNumber = resultsPerScreen;
+
+                        break;
+
+                    case 0:
+                        menuLoop = false;
+                        break;
+                }
+            }
+        }
+
+        static void MenuAddNewBook(LibraryManager library)
+        {
+            Console.WriteLine("Dodaj nową książkę");
+            Console.WriteLine();
+            Console.Write("Tytuł: ");
+
+            string title = Console.ReadLine();
+
+            Console.Write("Autor: ");
+
+            string author = Console.ReadLine();
+
+            Console.Write("ISBN: ");
+
+            string isbn = Console.ReadLine();
+            
+            Console.Write("Ilość (domyślnie 0): ");
+
+            int quantity;
+            int.TryParse(Console.ReadLine(), out quantity);
+
+            Console.Write("Półka: ");
+
+            string shelf = Console.ReadLine();
+
+            Console.WriteLine();
+
+            try
+            {
+                library.AddNewBook(title, author, isbn, shelf, quantity);
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Książka nie została dodana, wciśnij dowolny klawisz aby kontynuować...");
+                Console.ReadKey();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Książka nie została dodana, wciśnij dowolny klawisz aby kontynuować...");
+                Console.ReadKey();
+            }
+        }
+
+        static void MenuShowBooks(LibraryManager library, int resultsPerScreen)
+        {
+            int currentFrom = 0;
+            int resultsNumber = resultsPerScreen;
+
+            if (library.GetBooksCount() < resultsPerScreen)
+                resultsNumber = library.GetBooksCount();
+
+            bool menuLoop = true;
+
+            while (menuLoop)
+            {
+                if ((currentFrom + resultsNumber) > library.GetBooksCount())
+                    resultsNumber = library.GetBooksCount() - currentFrom;
+
+                Console.Clear();
+                Console.WriteLine($"Wyświetl książki | Łącznie książek: {library.GetBooksCount()}");
+                Console.WriteLine();
+                Console.WriteLine("ID | Tytuł | Autor | ISBN | Ilość | Półka");
+
+                foreach (Book item in library.GetBooksList(currentFrom, resultsNumber))
+                {
+                    Console.WriteLine($"{item.ID} | {item.Title} | {item.Author} | {item.ISBN} | {item.Quantity} | {item.Shelf}");
+                }
+
+                Console.WriteLine();
+                Console.WriteLine($"Obecnie wyświetlane są wyniki {currentFrom + 1} do {currentFrom + resultsNumber} z {library.GetBooksCount()}");
+                Console.WriteLine();
+                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 0. Powrót do menu");
+                Console.WriteLine();
+                Console.Write("Wybór: ");
+
+                int menuSelectedOption = int.Parse(Console.ReadLine());
+
+                switch (menuSelectedOption)
+                {
+                    case 1:
+                        if (currentFrom + resultsPerScreen < library.GetBooksCount())
                             currentFrom += resultsPerScreen;
                         break;
 
@@ -136,6 +238,14 @@ namespace wsei_wdp_library_manager
                     
                     case 5:
                         MenuShowReaders(library, 5);
+                        break;
+
+                    case 6:
+                        MenuAddNewBook(library);
+                        break;
+
+                    case 7:
+                        MenuShowBooks(library, 5);
                         break;
 
                     case 0:

@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace LibraryManagerLib
 {
     public class Book
     {
+        public int ID { get; private set; }
+
         public string Title { get; private set; }
 
         public string Author { get; set; }
@@ -20,15 +20,34 @@ namespace LibraryManagerLib
                 if (IsValidISBNFormat(value))
                     isbn = value;
                 else
-                    throw new FormatException("ISBN has not valid format");
+                    throw new FormatException("Numer ISBN ma błędny format");
             }
         }
 
-        public Book(string title, string author, string isbn)
+        private int quantity;
+        public int Quantity
         {
+            get => quantity;
+
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Liczba książek ma niepoprawną wartość");
+                else 
+                    quantity = value;
+            }
+        }
+
+        public string Shelf;
+
+        public Book(int id, string title, string author, string isbn, string shelf, int quantity = 0)
+        {
+            ID = id;
             Title = title;
             Author = author;
             ISBN = isbn;
+            Shelf = shelf;
+            Quantity = quantity;
         }
 
         private bool IsValidISBNFormat (string isbn)
