@@ -180,7 +180,8 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Krzysztof\\.nuget\\packages\\": {}
+    "C:\\Users\\Krzysztof\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -191,9 +192,13 @@
       "packagesPath": "C:\\Users\\Krzysztof\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Krzysztof\\Documents\\GitHub\\wsei-wdp-library-manager\\LibraryManagerLib\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
         "C:\\Users\\Krzysztof\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"

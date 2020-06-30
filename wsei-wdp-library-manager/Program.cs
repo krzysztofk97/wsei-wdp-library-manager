@@ -5,6 +5,130 @@ namespace wsei_wdp_library_manager
 {
     class Program
     {
+        //1. Nowe wypożyczenie
+        static void MenuAddNewBorrowing(LibraryManager library)
+        {
+            Console.WriteLine("Dodaj nowego czytelnika");
+            Console.WriteLine();
+            Console.Write("ID Książki: ");
+
+            int bookID;
+            int.TryParse(Console.ReadLine(), out bookID);
+
+            Console.Write("ID Czytelnika: ");
+
+            int readerID;
+            int.TryParse(Console.ReadLine(), out readerID);
+
+            Console.Write("Długość wypożyczenia (dni): ");
+
+            int borrowingTimeDays;
+            int.TryParse(Console.ReadLine(), out borrowingTimeDays);
+            DateTime endTime = DateTime.Now.AddDays(borrowingTimeDays);
+
+            Console.WriteLine();
+
+            try
+            {
+                library.AddNewBorrowing(bookID, readerID, new DateTime(endTime.Year, endTime.Month, endTime.Day, 23, 59, 59));
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Wypożyczenie nie zostało dodane, wciśnij dowolny klawisz aby kontynuować...");
+                Console.ReadKey();
+            }
+        }
+
+        //2. Wyświetl wypożyczenia
+        static void MenuShowBorrowings(LibraryManager library, int resultsPerScreen)
+        {
+            int currentFrom = 0;
+            int resultsNumber = resultsPerScreen;
+
+            if (library.GetBorrowingsCount() < resultsPerScreen)
+                resultsNumber = library.GetBorrowingsCount();
+
+            bool menuLoop = true;
+
+            while (menuLoop)
+            {
+                if ((currentFrom + resultsNumber) > library.GetBorrowingsCount())
+                    resultsNumber = library.GetBorrowingsCount() - currentFrom;
+
+                Console.Clear();
+                Console.WriteLine($"Wyświetl wypożyczenia");
+                Console.WriteLine();
+                Console.WriteLine("ID | Książka | Czytelnik | Wypożyczono | Termin zwrotu | Zwrócono");
+
+                foreach (Borrowing item in library.GetBorrowingsList(currentFrom, resultsNumber))
+                {
+                    Console.WriteLine($"{item.ID} | {item.ReaderID} | {library.GetBookName(item.BookID)} | {item.StartDate} | {item.EndDate.ToString("dd.MM.yyyy")} | {item.ReturnedDate}");
+                }
+
+                Console.WriteLine();
+                Console.WriteLine($"Obecnie wyświetlane są wyniki {currentFrom + 1} do {currentFrom + resultsNumber} z {library.GetBorrowingsCount()}");
+                Console.WriteLine();
+                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 3. Zakończ wypożyczenie | 0. Powrót do menu");
+                Console.WriteLine();
+                Console.Write("Wybór: ");
+
+                int menuSelectedOption;
+                int.TryParse(Console.ReadLine(), out menuSelectedOption);
+
+                switch (menuSelectedOption)
+                {
+                    case 1:
+                        if (currentFrom + resultsPerScreen < library.GetBorrowingsCount())
+                            currentFrom += resultsPerScreen;
+                        break;
+
+                    case 2:
+                        if (currentFrom > 0)
+                            currentFrom -= resultsPerScreen;
+
+                        if (resultsNumber < resultsPerScreen)
+                            resultsNumber = resultsPerScreen;
+
+                        break;
+
+                    case 3:
+                        Console.Clear();
+                        MenuEndBorrowing(library);
+                        break;
+
+                    case 0:
+                        menuLoop = false;
+                        break;
+                }
+            }
+        }
+
+        //3. Zakończ wypożyczenie
+        static void MenuEndBorrowing(LibraryManager library)
+        {
+            Console.WriteLine("Zakończ wypożyczenie");
+            Console.WriteLine();
+            Console.Write("ID wypożyczenia: ");
+
+            int borrowingID;
+            int.TryParse(Console.ReadLine(), out borrowingID);
+
+            Console.WriteLine();
+
+            try
+            {
+                library.EndBorrowing(borrowingID);
+            }
+            catch(ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Wypożyczenie nie zostało zakończone, wciśnij dowolny klawisz aby kontynuować...");
+                Console.ReadKey();
+            }
+        }
+
+        //4. Dodaj czytelnika
         static void MenuAddNewReader(LibraryManager library)
         {
             Console.WriteLine("Dodaj nowego czytelnika");
@@ -35,6 +159,7 @@ namespace wsei_wdp_library_manager
             }
         }
 
+        //5. Wyświetl czytelników
         static void MenuShowReaders(LibraryManager library, int resultsPerScreen)
         {
             int currentFrom = 0;
@@ -67,7 +192,8 @@ namespace wsei_wdp_library_manager
                 Console.WriteLine();
                 Console.Write("Wybór: ");
 
-                int menuSelectedOption = int.Parse(Console.ReadLine());
+                int menuSelectedOption;
+                int.TryParse(Console.ReadLine(), out menuSelectedOption);
 
                 switch (menuSelectedOption)
                 {
@@ -92,6 +218,7 @@ namespace wsei_wdp_library_manager
             }
         }
 
+        //6. Dodaj książkę
         static void MenuAddNewBook(LibraryManager library)
         {
             Console.WriteLine("Dodaj nową książkę");
@@ -137,6 +264,7 @@ namespace wsei_wdp_library_manager
             }
         }
 
+        //7. Wyświetl książki
         static void MenuShowBooks(LibraryManager library, int resultsPerScreen)
         {
             int currentFrom = 0;
@@ -169,7 +297,8 @@ namespace wsei_wdp_library_manager
                 Console.WriteLine();
                 Console.Write("Wybór: ");
 
-                int menuSelectedOption = int.Parse(Console.ReadLine());
+                int menuSelectedOption;
+                int.TryParse(Console.ReadLine(), out menuSelectedOption);
 
                 switch (menuSelectedOption)
                 {
@@ -213,7 +342,7 @@ namespace wsei_wdp_library_manager
                 Console.WriteLine($"Library Manager | Operator: {user}");
                 Console.WriteLine();
                 Console.WriteLine("1. Nowe wypożyczenie");
-                Console.WriteLine("2. Aktualne wypożyczenia");
+                Console.WriteLine("2. Wyświetl wypożyczenia");
                 Console.WriteLine("3. Zakończ wypożyczenie");
                 Console.WriteLine();
                 Console.WriteLine("4. Dodaj czytelnika");
@@ -226,12 +355,25 @@ namespace wsei_wdp_library_manager
                 Console.WriteLine();
                 Console.Write("Wybór: ");
 
-                int menuOptionSelected = int.Parse(Console.ReadLine());
+                int menuOptionSelected;
+                int.TryParse(Console.ReadLine(), out menuOptionSelected);
 
                 Console.Clear();
 
                 switch (menuOptionSelected)
                 {
+                    case 1:
+                        MenuAddNewBorrowing(library);
+                        break;
+
+                    case 2:
+                        MenuShowBorrowings(library, 5);
+                        break;
+
+                    case 3:
+                        MenuEndBorrowing(library);
+                        break;
+
                     case 4:
                         MenuAddNewReader(library);
                         break;
@@ -250,6 +392,9 @@ namespace wsei_wdp_library_manager
 
                     case 0:
                         Environment.Exit(0);
+                        break;
+
+                    default:
                         break;
                 }
 
