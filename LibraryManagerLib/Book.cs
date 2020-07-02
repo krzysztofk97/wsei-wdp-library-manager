@@ -7,7 +7,7 @@ namespace LibraryManagerLib
     {
         public int ID { get; private set; }
 
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         public string Author { get; set; }
 
@@ -15,7 +15,7 @@ namespace LibraryManagerLib
         public string ISBN {
             get => isbn;
 
-            set
+            private set
             {
                 if (IsValidISBNFormat(value))
                     isbn = value;
@@ -59,6 +59,5 @@ namespace LibraryManagerLib
 
             return true;
         }
-
     }
 }

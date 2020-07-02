@@ -45,6 +45,5 @@ namespace LibraryManagerLib
             else
                 return false;
         }
-    
     }
 }

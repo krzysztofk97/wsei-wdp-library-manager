@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Mail;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace LibraryManagerLib
@@ -11,7 +8,7 @@ namespace LibraryManagerLib
     {
         public int ID { get; private set; }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         private string phoneNumber;
         public string PhoneNumber {

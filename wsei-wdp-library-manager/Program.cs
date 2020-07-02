@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Globalization;
 using LibraryManagerLib;
 
 namespace wsei_wdp_library_manager
 {
     class Program
     {
+        //Obsługa opcji menu głownego
+
         //1. Nowe wypożyczenie
         static void MenuAddNewBorrowing(LibraryManager library)
         {
@@ -69,7 +72,7 @@ namespace wsei_wdp_library_manager
                 Console.WriteLine();
                 Console.WriteLine($"Obecnie wyświetlane są wyniki {currentFrom + 1} do {currentFrom + resultsNumber} z {library.GetBorrowingsCount()}");
                 Console.WriteLine();
-                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 3. Zakończ wypożyczenie | 0. Powrót do menu");
+                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 3. Zakończ wypożyczenie | 4. Przedłuż wypożyczenie | 0/Enter. Powrót do menu");
                 Console.WriteLine();
                 Console.Write("Wybór: ");
 
@@ -95,6 +98,11 @@ namespace wsei_wdp_library_manager
                     case 3:
                         Console.Clear();
                         MenuEndBorrowing(library);
+                        break;
+
+                    case 4:
+                        Console.Clear();
+                        MenuExtendBorrowing(library);
                         break;
 
                     case 0:
@@ -188,7 +196,7 @@ namespace wsei_wdp_library_manager
                 Console.WriteLine();
                 Console.WriteLine($"Obecnie wyświetlane są wyniki {currentFrom + 1} do {currentFrom + resultsNumber} z {library.GetReadersCount()}");
                 Console.WriteLine();
-                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 0. Powrót do menu");
+                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 3. Modyfikacja | 0/Enter. Powrót do menu");
                 Console.WriteLine();
                 Console.Write("Wybór: ");
 
@@ -209,6 +217,10 @@ namespace wsei_wdp_library_manager
                         if (resultsNumber < resultsPerScreen)
                             resultsNumber = resultsPerScreen;
 
+                        break;
+
+                    case 3:
+                        MenuModifyReaderData(library);
                         break;
 
                     case 0:
@@ -293,7 +305,7 @@ namespace wsei_wdp_library_manager
                 Console.WriteLine();
                 Console.WriteLine($"Obecnie wyświetlane są wyniki {currentFrom + 1} do {currentFrom + resultsNumber} z {library.GetBooksCount()}");
                 Console.WriteLine();
-                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 0. Powrót do menu");
+                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 3. Modyfikacja | 0/Enter. Powrót do menu");
                 Console.WriteLine();
                 Console.Write("Wybór: ");
 
@@ -316,6 +328,259 @@ namespace wsei_wdp_library_manager
 
                         break;
 
+                    case 3:
+                        MenuModifyBookData(library);
+                        break;
+
+                    case 0:
+                        menuLoop = false;
+                        break;
+                }
+            }
+        }
+
+        //Modyfikacje obiektów
+
+        //Menu -> Opcja
+
+        //2. -> 4. Przedłuż wypożyczenie
+        static void MenuExtendBorrowing(LibraryManager library)
+        {
+            Console.WriteLine("Przedłuż wypożyczenie");
+            Console.WriteLine();
+            Console.Write("ID wypożyczenia: ");
+
+            int borrowingID;
+            int.TryParse(Console.ReadLine(), out borrowingID);
+
+            Console.Write("Przedłużenie wypożyczenia o (dni):");
+
+            int extendDays;
+            int.TryParse(Console.ReadLine(), out extendDays);
+
+            Console.WriteLine();
+
+            try
+            {
+                library.ExtendBorrowing(borrowingID, extendDays);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Wypożyczenie nie zostało przedłużone, wciśnij dowolny klawisz aby kontynuować...");
+                Console.ReadKey();
+            }
+        }
+
+        //5. -> 3. Modyfikacja (czytelnika)
+        static void MenuModifyReaderData(LibraryManager library)
+        {
+            bool menuLoop = true;
+
+            while (menuLoop)
+            {
+                Console.Clear();
+
+                Console.WriteLine("Modyfikacja danych czytelnika");
+                Console.WriteLine();
+                Console.WriteLine("1. Zmiana imienia i nazwiska");
+                Console.WriteLine("2. Zmiana numeru telefonu");
+                Console.WriteLine("3. Zmiana adresu email");
+                Console.WriteLine();
+                Console.WriteLine("0/Enter. Powrót do menu");
+                Console.WriteLine();
+                Console.Write("Wybór: ");
+
+                int menuSelectedOption;
+                int.TryParse(Console.ReadLine(), out menuSelectedOption);
+
+                Console.Clear();
+
+                int readerID = -1;
+                string newData = "";
+
+                switch (menuSelectedOption)
+                {
+                    case 1:
+                        Console.WriteLine("Meodyfikacja imienia i nazwiska");
+                        Console.WriteLine();
+                        Console.Write("ID czytelnika: ");
+                        int.TryParse(Console.ReadLine(), out readerID);
+
+                        Console.Write("Nowe dane: ");
+                        newData = Console.ReadLine();
+
+                        try
+                        {
+                            library.ModifyReaderData(readerID, newData, LibraryManager.ReaderData.Name);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Imię i nazwisko nie zostały zmienione, wciśnij dowolny klawisz aby kontynuować...");
+                            Console.ReadKey();
+                        }
+
+                        break;
+
+                    case 2:
+                        Console.WriteLine("Meodyfikacja numeru telefonu");
+                        Console.WriteLine();
+                        Console.Write("ID czytelnika: ");
+                        int.TryParse(Console.ReadLine(), out readerID);
+
+                        Console.Write("Nowe dane: ");
+                        newData = Console.ReadLine();
+
+                        try
+                        {
+                            library.ModifyReaderData(readerID, newData, LibraryManager.ReaderData.PhoneNumber);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Numer telefonu nie został zmieniony, wciśnij dowolny klawisz aby kontynuować...");
+                            Console.ReadKey();
+                        }
+                        catch (FormatException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Numer telefonu nie został zmieniony, wciśnij dowolny klawisz aby kontynuować...");
+                            Console.ReadKey();
+                        }
+
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Meodyfikacja adresu email");
+                        Console.WriteLine();
+                        Console.Write("ID czytelnika: ");
+                        int.TryParse(Console.ReadLine(), out readerID);
+
+                        Console.Write("Nowe dane: ");
+                        newData = Console.ReadLine();
+
+                        try
+                        {
+                            library.ModifyReaderData(readerID, newData, LibraryManager.ReaderData.EmailAddress);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Adres email nie został zmieniony, wciśnij dowolny klawisz aby kontynuować...");
+                            Console.ReadKey();
+                        }
+                        catch (FormatException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Numer telefonu nie został zmieniony, wciśnij dowolny klawisz aby kontynuować...");
+                            Console.ReadKey();
+                        }
+
+                        break;
+
+                    case 0:
+                        menuLoop = false;
+                        break;
+                }
+            }
+        }
+
+        //7. -> 3. Modyfikacja (ksiązki) 
+        static void MenuModifyBookData(LibraryManager library)
+        {
+            bool menuLoop = true;
+
+            while (menuLoop)
+            {
+                Console.Clear();
+
+                Console.WriteLine("Modyfikacja danych ksiązki");
+                Console.WriteLine();
+                Console.WriteLine("1. Zmiana tytułu");
+                Console.WriteLine("2. Zmiana autora");
+                Console.WriteLine("3. Zmiana półki");
+                Console.WriteLine();
+                Console.WriteLine("0/Enter. Powrót do menu");
+                Console.WriteLine();
+                Console.Write("Wybór: ");
+
+                int menuSelectedOption;
+                int.TryParse(Console.ReadLine(), out menuSelectedOption);
+
+                Console.Clear();
+
+                int bookID = -1;
+                string newData = "";
+
+                switch (menuSelectedOption)
+                {
+                    case 1:
+                        Console.WriteLine("Modyfikacja tytułu");
+                        Console.WriteLine();
+                        Console.Write("ID ksiązki: ");
+                        int.TryParse(Console.ReadLine(), out bookID);
+
+                        Console.Write("Nowe dane: ");
+                        newData = Console.ReadLine();
+
+                        try
+                        {
+                            library.ModifyBookData(bookID, newData, LibraryManager.BookData.Title);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Tytuł nie został zmieniony, wciśnij dowolny klawisz aby kontynuować...");
+                            Console.ReadKey();
+                        }
+
+                        break;
+                    
+                    case 2:
+                        Console.WriteLine("Modyfikacja autora");
+                        Console.WriteLine();
+                        Console.Write("ID ksiązki: ");
+                        int.TryParse(Console.ReadLine(), out bookID);
+
+                        Console.Write("Nowe dane: ");
+                        newData = Console.ReadLine();
+
+                        try
+                        {
+                            library.ModifyBookData(bookID, newData, LibraryManager.BookData.Author);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Autor nie został zmieniony, wciśnij dowolny klawisz aby kontynuować...");
+                            Console.ReadKey();
+                        }
+
+                        break;
+                    
+                    case 3:
+                        Console.WriteLine("Modyfikacja półki");
+                        Console.WriteLine();
+                        Console.Write("ID ksiązki: ");
+                        int.TryParse(Console.ReadLine(), out bookID);
+
+                        Console.Write("Nowe dane: ");
+                        newData = Console.ReadLine();
+
+                        try
+                        {
+                            library.ModifyBookData(bookID, newData, LibraryManager.BookData.Shelf);
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            Console.WriteLine("Półka nie została zmieniona, wciśnij dowolny klawisz aby kontynuować...");
+                            Console.ReadKey();
+                        }
+
+                        break;
+
                     case 0:
                         menuLoop = false;
                         break;
@@ -327,19 +592,31 @@ namespace wsei_wdp_library_manager
         {
             LibraryManager library = new LibraryManager();
 
-            Console.WriteLine("Witaj w Library Manager!");
-            Console.WriteLine();
-            Console.WriteLine("Aby kontynuować wprowadź swój login.");
-            Console.WriteLine();
-            Console.Write("Login: ");
+            string user = "";
 
-            string user = Console.ReadLine();
+            bool loginLoop = true;
 
-            Console.Clear();
+            while (loginLoop)
+            {
+                Console.WriteLine("Witaj w Library Manager!");
+                Console.WriteLine();
+                Console.WriteLine("Aby kontynuować wprowadź swój login.");
+                Console.WriteLine();
+                Console.Write("Login: ");
+
+                user = Console.ReadLine();
+
+                Console.Clear();
+
+                if (user.Trim() != "")
+                    loginLoop = false;
+            }
+
+            DateTime date = DateTime.Now;
 
             while (true)
             {
-                Console.WriteLine($"Library Manager | Operator: {user}");
+                Console.WriteLine($"Library Manager | Operator: {user} | {date.ToString("D", CultureInfo.CreateSpecificCulture("pl-PL"))}");
                 Console.WriteLine();
                 Console.WriteLine("1. Nowe wypożyczenie");
                 Console.WriteLine("2. Wyświetl wypożyczenia");
@@ -351,7 +628,7 @@ namespace wsei_wdp_library_manager
                 Console.WriteLine("6. Dodaj książkę");
                 Console.WriteLine("7. Wyświetl ksiązki");
                 Console.WriteLine();
-                Console.WriteLine("0. Zakończ program");
+                Console.WriteLine("0/Enter. Zakończ program");
                 Console.WriteLine();
                 Console.Write("Wybór: ");
 
@@ -395,6 +672,7 @@ namespace wsei_wdp_library_manager
                         break;
 
                     default:
+
                         break;
                 }
 
