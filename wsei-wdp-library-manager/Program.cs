@@ -6,9 +6,14 @@ namespace wsei_wdp_library_manager
 {
     class Program
     {
-        //Obsługa opcji menu głownego
+        //Obsługa opcji menu głównego
 
         //1. Nowe wypożyczenie
+        
+        /// <summary>
+        /// Funkcja rysująca na ekranie menu dodawania nowego wypożyczenia.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
         static void MenuAddNewBorrowing(LibraryManager library)
         {
             Console.WriteLine("Dodaj nowego czytelnika");
@@ -44,6 +49,12 @@ namespace wsei_wdp_library_manager
         }
 
         //2. Wyświetl wypożyczenia
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie menu przeglądania wypożyczeń.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
+        /// <param name="resultsPerScreen">Ilość wyników na stronę</param>
         static void MenuShowBorrowings(LibraryManager library, int resultsPerScreen)
         {
             int currentFrom = 0;
@@ -62,7 +73,7 @@ namespace wsei_wdp_library_manager
                 Console.Clear();
                 Console.WriteLine($"Wyświetl wypożyczenia");
                 Console.WriteLine();
-                Console.WriteLine("ID | Książka | Czytelnik | Wypożyczono | Termin zwrotu | Zwrócono");
+                Console.WriteLine("ID | Czytelnik | Książka | Wypożyczono | Termin zwrotu | Zwrócono");
 
                 foreach (Borrowing item in library.GetBorrowingsList(currentFrom, resultsNumber))
                 {
@@ -113,6 +124,11 @@ namespace wsei_wdp_library_manager
         }
 
         //3. Zakończ wypożyczenie
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie menu kończenia wypożyczeń.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
         static void MenuEndBorrowing(LibraryManager library)
         {
             Console.WriteLine("Zakończ wypożyczenie");
@@ -137,6 +153,11 @@ namespace wsei_wdp_library_manager
         }
 
         //4. Dodaj czytelnika
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie menu dodawania nowego czytelnika.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
         static void MenuAddNewReader(LibraryManager library)
         {
             Console.WriteLine("Dodaj nowego czytelnika");
@@ -168,6 +189,12 @@ namespace wsei_wdp_library_manager
         }
 
         //5. Wyświetl czytelników
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie menu przeglądania czytelników.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
+        /// <param name="resultsPerScreen">Ilość wyników na stronę</param>
         static void MenuShowReaders(LibraryManager library, int resultsPerScreen)
         {
             int currentFrom = 0;
@@ -231,6 +258,11 @@ namespace wsei_wdp_library_manager
         }
 
         //6. Dodaj książkę
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie menu dodawania nowej ksiązki.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
         static void MenuAddNewBook(LibraryManager library)
         {
             Console.WriteLine("Dodaj nową książkę");
@@ -277,6 +309,12 @@ namespace wsei_wdp_library_manager
         }
 
         //7. Wyświetl książki
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie menu przeglądania ksiązek.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
+        /// <param name="resultsPerScreen">Ilość wyników na stronę</param>
         static void MenuShowBooks(LibraryManager library, int resultsPerScreen)
         {
             int currentFrom = 0;
@@ -299,13 +337,13 @@ namespace wsei_wdp_library_manager
 
                 foreach (Book item in library.GetBooksList(currentFrom, resultsNumber))
                 {
-                    Console.WriteLine($"{item.ID} | {item.Title} | {item.Author} | {item.ISBN} | {item.Quantity} | {item.Shelf}");
+                    Console.WriteLine($"{item.ID} | {item.Title} | {item.Author} | {item.ISBN} | {item.Quantity - item.BorrowedQuantity}/{item.Quantity} | {item.Shelf}");
                 }
 
                 Console.WriteLine();
                 Console.WriteLine($"Obecnie wyświetlane są wyniki {currentFrom + 1} do {currentFrom + resultsNumber} z {library.GetBooksCount()}");
                 Console.WriteLine();
-                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 3. Modyfikacja | 0/Enter. Powrót do menu");
+                Console.WriteLine("1. Następna strona | 2. Poprzednia strona | 3. Modyfikacja | 4. Edytuj ilość | 0/Enter. Powrót do menu");
                 Console.WriteLine();
                 Console.Write("Wybór: ");
 
@@ -325,11 +363,14 @@ namespace wsei_wdp_library_manager
 
                         if (resultsNumber < resultsPerScreen)
                             resultsNumber = resultsPerScreen;
-
                         break;
 
                     case 3:
                         MenuModifyBookData(library);
+                        break;
+
+                    case 4:
+                        MenuModifyBookQuantity(library);
                         break;
 
                     case 0:
@@ -344,6 +385,11 @@ namespace wsei_wdp_library_manager
         //Menu -> Opcja
 
         //2. -> 4. Przedłuż wypożyczenie
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie podmenu przedłużania wypożyczenia.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
         static void MenuExtendBorrowing(LibraryManager library)
         {
             Console.WriteLine("Przedłuż wypożyczenie");
@@ -353,7 +399,7 @@ namespace wsei_wdp_library_manager
             int borrowingID;
             int.TryParse(Console.ReadLine(), out borrowingID);
 
-            Console.Write("Przedłużenie wypożyczenia o (dni):");
+            Console.Write("Przedłużenie wypożyczenia o (dni): ");
 
             int extendDays;
             int.TryParse(Console.ReadLine(), out extendDays);
@@ -373,6 +419,11 @@ namespace wsei_wdp_library_manager
         }
 
         //5. -> 3. Modyfikacja (czytelnika)
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie podmenu modyfikacji danych czytelnika.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
         static void MenuModifyReaderData(LibraryManager library)
         {
             bool menuLoop = true;
@@ -410,6 +461,8 @@ namespace wsei_wdp_library_manager
                         Console.Write("Nowe dane: ");
                         newData = Console.ReadLine();
 
+                        Console.WriteLine();
+
                         try
                         {
                             library.ModifyReaderData(readerID, newData, LibraryManager.ReaderData.Name);
@@ -431,6 +484,8 @@ namespace wsei_wdp_library_manager
 
                         Console.Write("Nowe dane: ");
                         newData = Console.ReadLine();
+
+                        Console.WriteLine();
 
                         try
                         {
@@ -460,6 +515,8 @@ namespace wsei_wdp_library_manager
                         Console.Write("Nowe dane: ");
                         newData = Console.ReadLine();
 
+                        Console.WriteLine();
+
                         try
                         {
                             library.ModifyReaderData(readerID, newData, LibraryManager.ReaderData.EmailAddress);
@@ -486,7 +543,48 @@ namespace wsei_wdp_library_manager
             }
         }
 
-        //7. -> 3. Modyfikacja (ksiązki) 
+        //5. -> 4. Edytuj ilość 
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie podmenu modyfikacji ilości danej pozycji oferowanej przez bibliotekę.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
+        static void MenuModifyBookQuantity(LibraryManager library)
+        {
+            Console.Clear();
+
+            Console.WriteLine("Edytuj ilość");
+            Console.WriteLine();
+            Console.Write("ID książki: ");
+
+            int bookID;
+            int.TryParse(Console.ReadLine(), out bookID);
+
+            Console.Write("Ilość: ");
+
+            int quantity;
+            int.TryParse(Console.ReadLine(), out quantity);
+
+            Console.WriteLine();
+
+            try
+            {
+                library.ModifyBookQuantity(bookID, quantity);
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Ilość nie została zmieniona, wciśnij dowolny klawisz aby kontynuować...");
+                Console.ReadKey();
+            }
+        }
+
+        //7. -> 3. Modyfikacja (ksiązki)
+
+        /// <summary>
+        /// Funkcja rysująca na ekranie podmenu modyfikacji danych ksiązki.
+        /// </summary>
+        /// <param name="library">Biblioteka</param>
         static void MenuModifyBookData(LibraryManager library)
         {
             bool menuLoop = true;
@@ -524,6 +622,8 @@ namespace wsei_wdp_library_manager
                         Console.Write("Nowe dane: ");
                         newData = Console.ReadLine();
 
+                        Console.WriteLine();
+
                         try
                         {
                             library.ModifyBookData(bookID, newData, LibraryManager.BookData.Title);
@@ -546,6 +646,8 @@ namespace wsei_wdp_library_manager
                         Console.Write("Nowe dane: ");
                         newData = Console.ReadLine();
 
+                        Console.WriteLine();
+
                         try
                         {
                             library.ModifyBookData(bookID, newData, LibraryManager.BookData.Author);
@@ -567,6 +669,8 @@ namespace wsei_wdp_library_manager
 
                         Console.Write("Nowe dane: ");
                         newData = Console.ReadLine();
+
+                        Console.WriteLine();
 
                         try
                         {
@@ -672,7 +776,6 @@ namespace wsei_wdp_library_manager
                         break;
 
                     default:
-
                         break;
                 }
 
