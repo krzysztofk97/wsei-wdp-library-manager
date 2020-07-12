@@ -49,13 +49,27 @@ namespace LibraryManagerLib
         }
 
         /// <summary>
+        /// Funkcja sprawdzająca poprawność daty zakończenia wypożyczenia.
+        /// </summary>
+        /// <param name="startDate">Data rozpoczęcia wypożyczenia</param>
+        /// <param name="endDate">Data zakończenia wypożyczenia</param>
+        /// <returns><c>true</c> - w przypadku kiedy data zakończenia jest nowsza niż data rozpoczęcia wypożyczenia lub <c>false</c> - w innych przypadkach.</returns>
+        private bool IsEndDateCorrect(DateTime startDate, DateTime endDate)
+        {
+            if (endDate > startDate)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
         /// Parametr <c>ReturnedDate</c> przechowuje datę, kiedy dokonano zwrotu książki.
-        /// W przypadku kiedy pozycja nie została jeszcze zwrócona posiada ona wartość: <c>0001.01.01 00:00:00</c>.
+        /// W przypadku kiedy pozycja nie została jeszcze zwrócona posiada ona wartość: 0001.01.01 00:00:00.
         /// </summary>
         public DateTime ReturnedDate { get; set; }
 
         /// <summary>
-        /// Konstruktor klsy <c>Borrowing</c>.
+        /// Konstruktor klasy <c>Borrowing</c>.
         /// </summary>
         /// <param name="id">Identyfikator wypożyczenia</param>
         /// <param name="bookID">Identyfikator książki</param>
@@ -71,20 +85,6 @@ namespace LibraryManagerLib
             StartDate = startDate;
             EndDate = endDate;
             ReturnedDate = returnedDate;
-        }
-
-        /// <summary>
-        /// Funkcja sprawdzająca poprawność daty zakończenia wypożyczenia.
-        /// </summary>
-        /// <param name="startDate">Data rozpoczęcia wypożyczenia</param>
-        /// <param name="endDate">Data zakończenia wypożyczenia</param>
-        /// <returns><c>true</c> - w przypadku kiedy data zakończenia jest nowsza niż data rozpoczęcia wypożyczenia lub <c>false</c> - w innych przypadkach</returns>
-        private bool IsEndDateCorrect(DateTime startDate, DateTime endDate)
-        {
-            if (endDate > startDate)
-                return true;
-            else
-                return false;
         }
     }
 }

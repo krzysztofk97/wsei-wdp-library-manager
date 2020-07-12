@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace LibraryManagerLib
 {
     /// <summary>
-    /// Kalsa <c>LibraryManager</c> zawiera wszystkie funkcje służące od obsługi biblioteki.
+    /// Klasa <c>LibraryManager</c> zawiera wszystkie funkcje służące od obsługi biblioteki.
     /// </summary>
     public class LibraryManager
     {
@@ -131,9 +131,7 @@ namespace LibraryManagerLib
         public void ModifyBookQuantity(int bookID, int quantity)
         {
             if (IsBookIDExists(bookID))
-            {
                 books.Find(b => b.ID.Equals(bookID)).Quantity = quantity;
-            }
             else
                 throw new ArgumentException("Książka o podanym identyfikatorze nie istnieje");
         }
@@ -157,7 +155,7 @@ namespace LibraryManagerLib
         /// <summary>
         /// Funkcja zwracająca liczbę czytelników znajdujących się na liście <c>readers</c>.
         /// </summary>
-        /// <returns>Liczba pozycji na liście <c>readers</c></returns>
+        /// <returns>Liczba pozycji na liście <c>readers</c>.</returns>
         public int GetReadersCount()
         {
             return readers.Count;
@@ -255,7 +253,7 @@ namespace LibraryManagerLib
         /// <summary>
         /// Funkcja zwracająca liczbę wypożyczeń znajdujących się na liście <c>borrowings</c>.
         /// </summary>
-        /// <returns>Liczba pozycji na liście <c>borrowings</c></returns>
+        /// <returns>Liczba pozycji na liście <c>borrowings</c>.</returns>
         public int GetBorrowingsCount()
         {
             return borrowings.Count;
@@ -269,7 +267,8 @@ namespace LibraryManagerLib
         /// <returns>Lista wypożyczeń z podanego zakesu</returns>
         public List<Borrowing> GetBorrowingsList(int from, int length)
         {
-            List<Borrowing> reversedBorrowings = borrowings;
+            List<Borrowing> reversedBorrowings = new List<Borrowing>(borrowings);
+
             reversedBorrowings.Reverse();
 
             return reversedBorrowings.GetRange(from, length);
@@ -279,7 +278,7 @@ namespace LibraryManagerLib
         /// Funkcja sprawdzająca czy czytelnik o podanym identyfikatorze istnieje w bazie danych.
         /// </summary>
         /// <param name="readerID">Identyfikator czytelnika</param>
-        /// <returns><c>true</c> - w przypadku kiedy czytelnik o podanym identyfikatorze istnieje w bazie danych lub <c>false</c> - w innych przypadkach</returns>
+        /// <returns><c>true</c> - w przypadku kiedy czytelnik o podanym identyfikatorze istnieje w bazie danych lub <c>false</c> - w innych przypadkach.</returns>
         private bool IsReaderIDExists(int readerID)
         {
             for (int i = 0; i < GetReadersCount(); i++)
@@ -293,7 +292,7 @@ namespace LibraryManagerLib
         /// Funkcja sprawdzająca czy ksiązka o podanym identyfikatorze istnieje w bazie danych.
         /// </summary>
         /// <param name="bookID">Identyfikator książki</param>
-        /// <returns><c>true</c> - w przypadku kiedy ksiązka o podanym identyfikatorze istnieje w bazie danych lub <c>false</c> - w innych przypadkach</returns>
+        /// <returns><c>true</c> - w przypadku kiedy ksiązka o podanym identyfikatorze istnieje w bazie danych lub <c>false</c> - w innych przypadkach.</returns>
         private bool IsBookIDExists(int bookID)
         {
             if (bookID > GetBooksCount())
@@ -310,7 +309,7 @@ namespace LibraryManagerLib
         /// Funckja znajdująca tytuł ksiązki o podanym identyfikatorze.
         /// </summary>
         /// <param name="bookID">Identyfikator książki</param>
-        /// <returns>Parametr <c>Title</c> pozycji o danym identyfikatrze</returns>
+        /// <returns>Parametr <c>Title</c> pozycji o danym identyfikatrze.</returns>
         public string GetBookName(int bookID)
         {
             return books.Find(b => b.ID.Equals(bookID)).Title;
@@ -340,7 +339,7 @@ namespace LibraryManagerLib
         /// Funkcja sprawdzająca czy książka o podanym identyfikatorze została zwrócona (data zwrócenia książki jest nowsza od 01.01.0001 00:00:00 - data oznaczająca, że wypożyczenie nie zostało zwrócone).
         /// </summary>
         /// <param name="borrowingID">Identyfikator wypożyczenia</param>
-        /// <returns><c>true</c> - w przypadku kiedy data zakończenia jest nowsza niż 01.01.0001 00:00:00 lub <c>false</c> - w innych przypadkach</returns>
+        /// <returns><c>true</c> - w przypadku kiedy data zakończenia jest nowsza niż 01.01.0001 00:00:00 lub <c>false</c> - w innych przypadkach.</returns>
         private bool IsBookReturned(int borrowingID)
         {
             if (borrowings.Find(b => b.ID.Equals(borrowingID)).ReturnedDate > new DateTime(1, 1, 1, 0, 0, 0))
@@ -353,7 +352,7 @@ namespace LibraryManagerLib
         /// Funkcja sprawdzająca czy wypożyczenie o podanym identyfikatorze istnieje w bazie danych.
         /// </summary>
         /// <param name="borrowingID">Identyfikator wypożyczenia</param>
-        /// <returns><c>true</c> - w przypadku kiedy wypożyczenie o podanym identyfikatorze istnieje w bazie danych lub <c>false</c> - w innych przypadkach</returns>
+        /// <returns><c>true</c> - w przypadku kiedy wypożyczenie o podanym identyfikatorze istnieje w bazie danych lub <c>false</c> - w innych przypadkach.</returns>
         private bool IsBorrowingIDExists(int borrowingID)
         {
             if (borrowingID > GetBorrowingsCount())
@@ -393,7 +392,7 @@ namespace LibraryManagerLib
         /// Funkcja sprawdzająca czy książka o podanym identyfikatorze jest dostępona w bibliotece.
         /// </summary>
         /// <param name="borrowingID">Identyfikator książki</param>
-        /// <returns><c>true</c> - w przypadku kiedy książka o podanym identyfikatorze jest dostępna lub <c>false</c> - w innych przypadkach</returns>
+        /// <returns><c>true</c> - w przypadku kiedy książka o podanym identyfikatorze jest dostępna lub <c>false</c> - w innych przypadkach.</returns>
         private bool IsBookAvailable(int bookID)
         {
             if (books.Find(b => b.ID.Equals(bookID)).BorrowedQuantity < books.Find(b => b.ID.Equals(bookID)).Quantity)

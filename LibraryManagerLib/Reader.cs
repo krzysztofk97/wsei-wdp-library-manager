@@ -15,10 +15,22 @@ namespace LibraryManagerLib
         /// </summary>
         public int ID { get; private set; }
 
+        private string name;
         /// <summary>
         /// Parametr <c>Name</c> przechowuje imię i nazwisko/nazwę czytelnika.
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get => name;
+
+            set
+            {
+                if (value.Trim() == "")
+                    throw new ArgumentException("Nie podano imienia i nazwiska");
+                else
+                    name = value;
+            }
+        }
 
         private string phoneNumber;
         /// <summary>
@@ -40,7 +52,7 @@ namespace LibraryManagerLib
         /// Funkcja sprawdzająca za pomocą zadanego wyrażenia regularnego poprawność wpisywanego przez uzytkownika numeru telefonu.
         /// </summary>
         /// <param name="phoneNumber">Numer telefonu do sprawdzenia</param>
-        /// <returns><c>false</c> - w przypadku niezgodności zmiennej <c>phoneNumber</c> ze wzorcem lub <c>true</c> - w innych przypadkach</returns>
+        /// <returns><c>false</c> - w przypadku niezgodności zmiennej <c>phoneNumber</c> ze wzorcem lub <c>true</c> - w innych przypadkach.</returns>
         private bool IsValidPhoneNumberFormat(string phoneNumber)
         {
             Regex regexPhoneNumber = new Regex(@"^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$");

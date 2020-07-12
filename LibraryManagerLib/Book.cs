@@ -14,15 +14,39 @@ namespace LibraryManagerLib
         /// </summary>
         public int ID { get; private set; }
 
+        private string title;
         /// <summary>
         /// Parametr <c>Title</c> przechowuje tytuł danej książki.
         /// </summary>
-        public string Title { get; set; }
+        public string Title 
+        {
+            get => title;
 
+            set
+            {
+                if (value.Trim() == "")
+                    throw new ArgumentException("Nie podano tytułu książki");
+                else
+                    title = value;
+            }
+        }
+
+        private string author;
         /// <summary>
         /// Parametr <c>Author</c> przechowuje imię i nazwisko/nazwę autora danej ksiązki.
         /// </summary>
-        public string Author { get; set; }
+        public string Author
+        {
+            get => author;
+
+            set
+            {
+                if (value.Trim() == "")
+                    throw new ArgumentException("Kasiążka musi mieć autora");
+                else
+                    author = value;
+            }
+        }
 
         private string isbn;
         /// <summary>
@@ -39,6 +63,21 @@ namespace LibraryManagerLib
                 else
                     throw new FormatException("Numer ISBN ma błędny format");
             }
+        }
+
+        /// <summary>
+        /// Funkcja sprawdzająca za pomocą zadanego wyrażenia regularnego poprawność wpisywanego przez uzytkownika numeru ISBN.
+        /// </summary>
+        /// <param name="isbn">Numer ISBN do sprawdzenia</param>
+        /// <returns><c>false</c> - w przypadku niezgodności zmiennej <c>isbn</c> ze wzorcem lub <c>true</c> - w innych przypadkach.</returns>
+        private bool IsValidISBNFormat(string isbn)
+        {
+            Regex regexISBN = new Regex(@"^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$");
+
+            if (!regexISBN.IsMatch(isbn))
+                return false;
+
+            return true;
         }
 
         private int quantity;
@@ -103,21 +142,6 @@ namespace LibraryManagerLib
             Shelf = shelf;
             Quantity = quantity;
             BorrowedQuantity = 0;
-        }
-
-        /// <summary>
-        /// Funkcja sprawdzająca za pomocą zadanego wyrażenia regularnego poprawność wpisywanego przez uzytkownika numeru ISBN.
-        /// </summary>
-        /// <param name="isbn">Numer ISBN do sprawdzenia</param>
-        /// <returns><c>false</c> - w przypadku niezgodności zmiennej <c>isbn</c> ze wzorcem lub <c>true</c> - w innych przypadkach</returns>
-        private bool IsValidISBNFormat (string isbn)
-        {
-            Regex regexISBN = new Regex(@"^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$");
-
-            if (!regexISBN.IsMatch(isbn))
-                return false;
-
-            return true;
         }
     }
 }
